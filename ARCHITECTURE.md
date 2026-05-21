@@ -4,14 +4,14 @@
 
 ```mermaid
 flowchart TD
-    User([User enters stock ticker]) --> LG
+    User([User enters stock ticker]) --> N1
 
-    subgraph LG["LangGraph Orchestrator (graph.py)"]
+    subgraph LG["LangGraph Orchestrator"]
         N1[Node 1: Run Analysts] --> N2[Node 2: Risk Manager]
         N2 --> N3[Node 3: Report Writer]
         N3 --> N4[Node 4: Evaluator]
-        N4 -->|score < 7| N3
-        N4 -->|score >= 7| N5[Node 5: Human Review]
+        N4 -->|score below 7| N3
+        N4 -->|score above 7| N5[Node 5: Human Review]
         N5 -->|approved| N6[Node 6: Execute]
         N5 -->|rejected| N7[Node 7: Rejected]
         N5 -->|revise| N3
@@ -58,13 +58,16 @@ flowchart TD
         CP[Checkpoint Logger]
     end
 
-    N1 --> CREW
-    RA --> MCP2
-    RA --> RAG
-    QA --> MCP1
-    RAG --> EMB --> VDB
-    N2 --> A2A
-    A2A --> OAI
+    N1 --> RA
+    N1 --> QA
+    RA --> T3
+    RA --> T4
+    RA --> EMB
+    EMB --> VDB
+    QA --> T1
+    QA --> T2
+    N2 --> AE
+    AE --> RM
     N3 --> RW
     N4 --> EV
     N5 --> UI

@@ -17,45 +17,45 @@ flowchart TD
         N5 -->|revise| N3
     end
 
-    subgraph CREW["CrewAI — Parallel Analysts (analysts.py)"]
-        RA[Research Analyst\nAgent + Task + Crew]
-        QA[Quant Analyst\nAgent + Task + Crew]
+    subgraph CREW["CrewAI — Parallel Analysts"]
+        RA[Research Analyst]
+        QA[Quant Analyst]
     end
 
-    subgraph OAI["OpenAI Agents SDK (risk_and_report.py)"]
-        RM[Risk Manager\nAgent + Runner]
-        RW[Report Writer\nAgent + Runner]
-        EV[Evaluator\nAgent + Runner]
+    subgraph OAI["OpenAI Agents SDK"]
+        RM[Risk Manager]
+        RW[Report Writer]
+        EV[Evaluator]
     end
 
-    subgraph A2A["A2A Server — port 8001 (a2a_risk_server.py)"]
-        AC[/.well-known/agent.json\nAgent Card]
-        AE[/a2a\nRisk Endpoint]
-        AH[/health]
+    subgraph A2A["A2A Server — port 8001"]
+        AC[Agent Card]
+        AE[Risk Endpoint]
+        AH[Health Check]
     end
 
     subgraph MCP1["FastMCP — market-data-mcp"]
-        T1["Tool: get_price_history()"]
-        T2["Tool: get_financial_ratios()"]
-        R1["Resource: market://snapshot/{ticker}"]
-        P1["Prompt: analyze_technicals()"]
+        T1[Tool: get_price_history]
+        T2[Tool: get_financial_ratios]
+        R1[Resource: market snapshot]
+        P1[Prompt: analyze_technicals]
     end
 
     subgraph MCP2["FastMCP — news-sentiment-mcp"]
-        T3["Tool: search_news()"]
-        T4["Tool: score_sentiment()"]
-        R2["Resource: news://feed/{ticker}"]
-        P2["Prompt: summarize_risk_factors()"]
+        T3[Tool: search_news]
+        T4[Tool: score_sentiment]
+        R2[Resource: news feed]
+        P2[Prompt: summarize_risk_factors]
     end
 
-    subgraph RAG["ChromaDB RAG Pipeline (embedder.py)"]
+    subgraph RAG["ChromaDB RAG Pipeline"]
         EMB[text-embedding-3-small]
-        VDB[(ChromaDB\nVector Store)]
+        VDB[(ChromaDB Vector Store)]
     end
 
     subgraph HITL["Human-in-the-Loop"]
-        UI[Web UI\nlocalhost:8000]
-        CP[Checkpoint Logger\noutputs/checkpoints/]
+        UI[Web UI localhost:8000]
+        CP[Checkpoint Logger]
     end
 
     N1 --> CREW

@@ -1,0 +1,21 @@
+# Environment
+.env
+
+# Virtual environment
+venv/
+venv311/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# ChromaDB database
+rag/vector_store/db/
+
+# Generated outputs
+outputs/
+
+# IDE
+.vscode/
+.idea/

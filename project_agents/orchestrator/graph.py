@@ -26,7 +26,6 @@ class InvestmentState(TypedDict):
     evaluation: Optional[dict]
     human_decision: Optional[str]
     human_feedback: Optional[str]
-    retry_count: int
 
 # ── NODE 1: Run CrewAI Analysts ──────────────────────────
 def run_analysts_node(state: InvestmentState) -> InvestmentState:
@@ -179,7 +178,6 @@ def build_graph():
         "run_evaluator",
         route_after_evaluation,
         {
-            "retry": "run_report",
             "human_review": "human_review"
         }
     )
@@ -210,8 +208,7 @@ if __name__ == "__main__":
         "report_result": None,
         "evaluation": None,
         "human_decision": None,
-        "human_feedback": None,
-        "retry_count": 0
+        "human_feedback": None
     }
     config = {"configurable": {"thread_id": "session-1"}}
     graph.invoke(initial_state, config=config)

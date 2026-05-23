@@ -72,8 +72,7 @@ def analyze(request: AnalyzeRequest):
                 "report_result": request.state.get("report_result"),
                 "evaluation": request.state.get("evaluation"),
                 "human_decision": "revise",
-                "human_feedback": request.feedback,
-                "retry_count": request.state.get("retry_count", 0)
+                "human_feedback": request.feedback
             }
         else:
             initial_state = {
@@ -84,8 +83,7 @@ def analyze(request: AnalyzeRequest):
                 "report_result": None,
                 "evaluation": None,
                 "human_decision": None,
-                "human_feedback": None,
-                "retry_count": 0
+                "human_feedback": None
             }
 
         final_state = graph.invoke(initial_state, config=config)

@@ -36,8 +36,7 @@ def main():
         "report_result": None,
         "evaluation": None,
         "human_decision": None,
-        "human_feedback": None,
-        "retry_count": 0
+        "human_feedback": None
     }
 
     config = {"configurable": {"thread_id": f"session-{ticker}"}}

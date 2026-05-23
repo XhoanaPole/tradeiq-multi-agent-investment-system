@@ -10,7 +10,7 @@ takes hours and is prone to cognitive bias.
 **TradeIQ** automates this process using a coordinated pipeline of specialized AI agents,
 each responsible for one part of the analysis. The system produces a structured
 investment brief, evaluates its own quality, and presents it to a human for a final
-approve/reject/revise decision — ensuring AI augments rather than replaces human judgment.
+approve/reject/revise decision , ensuring AI augments rather than replaces human judgment.
 
 ---
 
@@ -122,7 +122,7 @@ format (Executive Summary, Analysis, Recommendation) is maintained across all ti
 ### Evaluator Scores
 
 During testing across multiple tickers (AAPL, TSLA, MSFT, NVDA, META, AMZN, JPM),
-the Evaluator agent assigned scores based on investment signal strength — strong stocks
+the Evaluator agent assigned scores based on investment signal strength , strong stocks
 with positive sentiment and low risk scored 8-9/10, while speculative or high-risk tickers
 scored 5-7/10. The retry loop triggered more frequently for high-risk tickers, producing
 a revised brief with clearer risk disclosures on the second attempt.
@@ -142,7 +142,7 @@ simultaneously rather than sequentially.
 - **NewsAPI free tier** limits searches to articles from the past 30 days and
   returns a maximum of 5 articles per query.
 - **RAG store** uses fixed IDs per ticker, so each run overwrites previous embeddings
-  with the latest headlines — this is intentional to keep the store fresh.
+  with the latest headlines ,this is intentional to keep the store fresh.
 - **Human-in-the-Loop** is implemented at the API layer rather than via LangGraph's
   native `interrupt_before` mechanism. This is functionally equivalent for the web UI
   use case but means the graph does not natively pause mid-execution.

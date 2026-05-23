@@ -7,7 +7,14 @@ import sys
 import os
 import json
 import httpx
+import logging
 from datetime import datetime
+
+class _NoHealthFilter(logging.Filter):
+    def filter(self, record):
+        return "/api/health" not in record.getMessage()
+
+logging.getLogger("uvicorn.access").addFilter(_NoHealthFilter())
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 

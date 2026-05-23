@@ -158,7 +158,7 @@ def evaluate_brief(brief: str, risk_result: dict = None, research_result: dict =
     except json.JSONDecodeError:
         evaluation = {"score": 0, "passed": False, "feedback": raw}
 
-    print(f" Brief score: {evaluation.get('score', 'N/A')}/10 — Passed: {evaluation.get('passed', False)}")
+    print(f" Signal score: {evaluation.get('score', 'N/A')}/10 — Passed: {evaluation.get('passed', False)}")
     return evaluation
 
 

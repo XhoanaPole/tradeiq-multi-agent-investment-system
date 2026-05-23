@@ -79,7 +79,7 @@ flowchart TD
 
 | Framework | Role in System |
 |---|---|
-| **LangGraph** | Orchestrates the full pipeline via a stateful graph with conditional routing and retry loops |
+| **LangGraph** | Orchestrates the full pipeline via a stateful graph with conditional routing and human review checkpoint |
 | **CrewAI** | Runs Research and Quant analyst agents in parallel using Agent/Task/Crew abstractions |
 | **OpenAI Agents SDK** | Powers Risk Manager, Report Writer, and Evaluator via Agent + Runner pattern |
 | **FastMCP** | Exposes market data and news sentiment as MCP servers with Tools, Resources, and Prompts |

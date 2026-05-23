@@ -133,7 +133,7 @@ def analyze(request: AnalyzeRequest):
             "sentiment": (
                 sentiment.get("label", "N/A")
                 if isinstance(sentiment, dict)
-                else "N/A"
+                else (sentiment[0].get("label", "N/A") if isinstance(sentiment, list) and sentiment else "N/A")
             ),
 
             "brief": report.get(

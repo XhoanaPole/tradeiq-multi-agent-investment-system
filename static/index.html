@@ -804,6 +804,13 @@ nav {
 /* FOOTER */
 footer { text-align: center; color: var(--text3); font-size: 0.75rem; padding: 40px 60px; border-top: 1px solid var(--border); margin-top: 40px; letter-spacing: 0.05em; }
 
+/* REVISED BANNER */
+.revised-banner { display: none; background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.2); border-radius: 12px; padding: 14px 18px; margin-bottom: 14px; align-items: flex-start; gap: 12px; }
+.revised-banner.show { display: flex; }
+.revised-icon { color: var(--yellow); font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+.revised-title { font-size: 0.8rem; font-weight: 600; color: var(--yellow); margin-bottom: 4px; letter-spacing: 0.02em; }
+.revised-text { font-size: 0.82rem; color: var(--text2); font-style: italic; }
+
 /* CONFETTI */
 .confetti-piece { position: fixed; width: 8px; height: 8px; top: -10px; animation: confetti-fall linear forwards; border-radius: 2px; z-index: 9999; }
 @keyframes confetti-fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
@@ -921,7 +928,7 @@ footer { text-align: center; color: var(--text3); font-size: 0.75rem; padding: 4
       <div class="step" id="step2"><div class="step-icon">2</div><span>Quant Analyst — price history & financial ratios</span></div>
       <div class="step" id="step3"><div class="step-icon">3</div><span>Risk Manager — A2A server call in progress</span></div>
       <div class="step" id="step4"><div class="step-icon">4</div><span>Report Writer — generating investment brief</span></div>
-      <div class="step" id="step5"><div class="step-icon">5</div><span>Evaluator — scoring report quality</span></div>
+      <div class="step" id="step5"><div class="step-icon">5</div><span>Evaluator — scoring investment signal</span></div>
     </div>
     <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
   </div>
@@ -950,6 +957,13 @@ footer { text-align: center; color: var(--text3); font-size: 0.75rem; padding: 4
 
     <!-- BRIEF -->
     <div class="sec-hdr"><div class="sec-hdr-txt">Investment Brief</div><div class="sec-hdr-line"></div></div>
+    <div id="revisedBanner" class="revised-banner">
+      <span class="revised-icon">✎</span>
+      <div>
+        <div class="revised-title">Brief revised based on your feedback</div>
+        <div id="revisedFeedbackText" class="revised-text"></div>
+      </div>
+    </div>
     <div class="card"><div class="brief-body" id="briefContent"></div></div>
 
     <!-- DECISION -->
@@ -1061,6 +1075,7 @@ let currentState = null;
 let currentTicker = '';
 let currentBrief = '';
 let historyLogs = [];
+let pendingRevisionFeedback = null;
 
 // ── INIT ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
@@ -1365,6 +1380,17 @@ async function renderResults(data) {
   document.getElementById('briefContent').innerHTML =
     mdToHtml(data.brief);
 
+  // REVISED BANNER
+  const banner = document.getElementById('revisedBanner');
+  if (pendingRevisionFeedback) {
+    document.getElementById('revisedFeedbackText').textContent = '"' + pendingRevisionFeedback + '"';
+    banner.classList.add('show');
+    document.getElementById('feedbackInput').value = '';
+    pendingRevisionFeedback = null;
+  } else {
+    banner.classList.remove('show');
+  }
+
   // SHOW RESULTS
   document.getElementById('results').classList.add('show');
 
@@ -1404,6 +1430,7 @@ async function makeDecision(decision) {
         setTimeout(resetSearch, 1500);
       } else {
         showToast('✏️ Marked for revision.', '');
+        pendingRevisionFeedback = feedback;
         runAnalysis(feedback, currentState);
       }
     }

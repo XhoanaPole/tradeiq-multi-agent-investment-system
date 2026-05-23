@@ -60,16 +60,26 @@ def run_report_writer(
         instructions=(
             "You are a professional investment report writer. "
             "Write clear, structured, and concise investment briefs "
-            "that a portfolio manager can act on immediately."
+            "that a portfolio manager can act on immediately. "
+            "CRITICAL: Your Final Recommendation MUST align with the Risk Manager's recommendation. "
+            "If risk recommendation is 'avoid' → Final Recommendation must be Sell / Avoid. "
+            "If risk recommendation is 'caution' → Final Recommendation must be Hold. "
+            "If risk recommendation is 'proceed' → Final Recommendation must be Buy. "
+            "Never contradict the Risk Manager's recommendation in your conclusion."
         ),
         model="gpt-4o-mini"
     )
+
+    risk_assessment = risk_result.get("risk_assessment", {})
+    risk_recommendation = risk_assessment.get("recommendation", "caution")
 
     message = (
         f"Write a full investment brief for {ticker} using this data:\n\n"
         f"1. RESEARCH SUMMARY:\n{research_result.get('research_summary', '')}\n\n"
         f"2. QUANT ANALYSIS:\n{quant_result.get('quant_analysis', '')}\n\n"
-        f"3. RISK ASSESSMENT:\n{json.dumps(risk_result.get('risk_assessment', {}), indent=2)}\n\n"
+        f"3. RISK ASSESSMENT:\n{json.dumps(risk_assessment, indent=2)}\n\n"
+        f"IMPORTANT: The Risk Manager has determined the recommendation is '{risk_recommendation.upper()}'. "
+        f"Your Final Recommendation MUST reflect this — do not override it.\n\n"
     )
 
     if human_feedback:
@@ -85,7 +95,7 @@ def run_report_writer(
         "- Market Sentiment\n"
         "- Quantitative Analysis\n"
         "- Risk Assessment\n"
-        "- Final Recommendation (Buy/Hold/Sell with price target if possible)"
+        "- Final Recommendation (Buy/Hold/Sell aligned with the Risk Manager — include price target if possible)"
     )
 
     result = Runner.run_sync(report_agent, message)

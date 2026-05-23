@@ -84,11 +84,14 @@ def run_research_analyst(ticker: str) -> dict:
             f"Use the 'Score News Sentiment' tool on those headlines. "
             f"Use the 'RAG Context Retrieval' tool with query '{ticker} stock news risk'. "
             f"Write a concise research summary covering: "
-            f"1) Recent developments, 2) Market sentiment, 3) Key risks."
+            f"1) Recent developments, 2) Market sentiment, 3) Key risks. "
+            f"At the very end of your output, add a final line in exactly this format: "
+            f"SENTIMENT_LABEL: positive OR SENTIMENT_LABEL: neutral OR SENTIMENT_LABEL: negative"
         ),
         expected_output=(
             "A structured research summary with three clearly labelled sections: "
-            "Recent Developments, Market Sentiment, and Key Risks."
+            "Recent Developments, Market Sentiment, and Key Risks. "
+            "Followed by a final line: SENTIMENT_LABEL: positive/neutral/negative"
         ),
         agent=research_agent
     )
@@ -101,7 +104,23 @@ def run_research_analyst(ticker: str) -> dict:
     )
 
     crew_result = crew.kickoff(inputs={"ticker": ticker})
-    summary = crew_result.raw if hasattr(crew_result, "raw") else str(crew_result)
+    raw_output = crew_result.raw if hasattr(crew_result, "raw") else str(crew_result)
+
+    # Extract analyst's holistic sentiment label and strip it from the summary
+    analyst_label = None
+    clean_lines = []
+    for line in raw_output.splitlines():
+        if line.strip().upper().startswith("SENTIMENT_LABEL:"):
+            label = line.split(":", 1)[1].strip().lower()
+            if label in ("positive", "neutral", "negative"):
+                analyst_label = label
+        else:
+            clean_lines.append(line)
+    summary = "\n".join(clean_lines).strip()
+
+    # Override raw headline sentiment label with analyst's holistic assessment
+    if analyst_label:
+        sentiment = {**sentiment, "label": analyst_label}
 
     return {
         "ticker": ticker,

@@ -173,7 +173,7 @@ def build_graph():
     graph.add_edge("run_risk", "run_report")
     graph.add_edge("run_report", "run_evaluator")
 
-    # Conditional: evaluator → retry or human review
+    # Conditional: evaluator → human review
     graph.add_conditional_edges(
         "run_evaluator",
         route_after_evaluation,

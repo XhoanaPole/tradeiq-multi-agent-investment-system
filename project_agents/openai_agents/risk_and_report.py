@@ -95,22 +95,44 @@ def run_report_writer(
 
 
 # ── EVALUATOR (OpenAI Agents SDK) ────────────────────────
-def evaluate_brief(brief: str) -> dict:
-    """Scores the quality of the investment brief."""
+def evaluate_brief(brief: str, risk_result: dict = None, research_result: dict = None) -> dict:
+    """Scores the investment signal strength of the brief."""
     print(f"\n Evaluator scoring the brief...")
 
     evaluator_agent = Agent(
         name="Brief Evaluator",
         instructions=(
-            "You are a quality evaluator for investment reports. "
-            "Score the report and respond ONLY in valid JSON with: "
+            "You are a senior investment analyst evaluating whether a stock is worth investing in. "
+            "Score the investment opportunity (NOT the writing quality) from 0-10 based on: "
+            "strength of fundamentals, sentiment direction, risk level, and clarity of the recommendation. "
+            "Deduct points for: high risk level, negative sentiment, unresolved red flags, "
+            "weak or missing price targets, vague Buy/Hold/Sell reasoning. "
+            "A risky or speculative stock should score 4-6. A strong stock with clear upside should score 8-10. "
+            "Respond ONLY in valid JSON with: "
             "score (0-10), passed (true/false if score >= 7), "
-            "feedback (one sentence on what to improve)."
+            "feedback (one sentence explaining the score)."
         ),
         model="gpt-4o-mini"
     )
 
-    result = Runner.run_sync(evaluator_agent, f"Evaluate this investment brief:\n\n{brief}")
+    context = f"Investment Brief:\n\n{brief}"
+    if risk_result:
+        ra = risk_result.get("risk_assessment", {})
+        context += (
+            f"\n\nRisk Data:\n"
+            f"- Risk level: {ra.get('risk_level', 'unknown')}\n"
+            f"- Red flags: {ra.get('red_flags', [])}\n"
+            f"- Risk recommendation: {ra.get('recommendation', 'unknown')}"
+        )
+    if research_result:
+        sentiment = research_result.get("sentiment", {})
+        context += (
+            f"\n\nSentiment Data:\n"
+            f"- Score: {sentiment.get('score', 'unknown')} (scale: -1.0 negative to 1.0 positive)\n"
+            f"- Label: {sentiment.get('label', 'unknown')}"
+        )
+
+    result = Runner.run_sync(evaluator_agent, context)
     raw = result.final_output
     clean = raw.replace("```json", "").replace("```", "").strip()
 

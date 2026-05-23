@@ -102,7 +102,7 @@ def run_evaluator_node(state: InvestmentState) -> InvestmentState:
     print(f"  NODE 4: Evaluating Brief Quality")
     print("═══════════════════════════════════════")
     brief = state["report_result"]["investment_brief"]
-    evaluation = evaluate_brief(brief)
+    evaluation = evaluate_brief(brief, state.get("risk_result"), state.get("research_result"))
     return {**state, "evaluation": evaluation}
 
 def human_review_node(state: InvestmentState) -> InvestmentState:

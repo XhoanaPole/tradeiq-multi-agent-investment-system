@@ -21,7 +21,7 @@ investment briefs — with a Human-in-the-Loop checkpoint before any action is t
 | Quant Analyst | CrewAI | Fetches price history and financial ratios |
 | Risk Manager | OpenAI Agents SDK + A2A | Evaluates risk via standalone A2A server |
 | Report Writer | OpenAI Agents SDK | Generates structured investment brief |
-| Evaluator | OpenAI Agents SDK | Scores brief quality, loops back if score < 7 |
+| Evaluator | OpenAI Agents SDK | Scores investment signal strength (fundamentals, sentiment, risk), loops back if score < 7 |
 
 ## MCP Servers
 
@@ -41,7 +41,7 @@ investment briefs — with a Human-in-the-Loop checkpoint before any action is t
 
 - **Parallelization** — Research and Quant analysts run simultaneously via ThreadPoolExecutor
 - **Orchestrator-Workers** — LangGraph orchestrates all agent calls
-- **Evaluator-Optimizer** — Brief is scored 0-10 and rewritten if score < 7 (max 2 retries)
+- **Evaluator-Optimizer** — Investment signal scored 0-10 (fundamentals, sentiment, risk level); loops back to Report Writer if score < 7 (max 2 retries)
 - **Prompt Chaining** — News → Sentiment → Risk → Brief → Recommendation
 - **Human-in-the-Loop** — Human approves/rejects/revises before execution
 - **RAG Pipeline** — News headlines embedded and stored in ChromaDB, retrieved at analysis time

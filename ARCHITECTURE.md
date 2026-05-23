@@ -10,8 +10,7 @@ flowchart TD
         N1[Node 1: Run Analysts] --> N2[Node 2: Risk Manager]
         N2 --> N3[Node 3: Report Writer]
         N3 --> N4[Node 4: Evaluator]
-        N4 -->|score below 7| N3
-        N4 -->|score above 7| N5[Node 5: Human Review]
+        N4 --> N5[Node 5: Human Review]
         N5 -->|approved| N6[Node 6: Execute]
         N5 -->|rejected| N7[Node 7: Rejected]
         N5 -->|revise| N3

@@ -1345,15 +1345,16 @@ async function renderResults(data) {
   document.getElementById('mScore').textContent =
     data.score + '/10';
 
-  const rec = (data.recommendation || 'N/A').toUpperCase();
+  const recRaw = (data.recommendation || 'N/A').toLowerCase();
+  const recLabel = recRaw === 'proceed' ? 'BUY' : recRaw === 'caution' ? 'HOLD' : recRaw === 'avoid' ? 'SELL' : (data.recommendation || 'N/A').toUpperCase();
 
   const recEl = document.getElementById('mRec');
-  recEl.textContent = rec;
+  recEl.textContent = recLabel;
   recEl.className =
     'mval ' +
-    (rec === 'AVOID'
+    (recRaw === 'avoid'
       ? 'cr'
-      : rec === 'CAUTION'
+      : recRaw === 'caution'
       ? 'cy'
       : 'cg');
 

@@ -100,14 +100,19 @@ def evaluate_brief(brief: str, risk_result: dict = None, research_result: dict =
     print(f"\n Evaluator scoring the brief...")
 
     evaluator_agent = Agent(
-        name="Brief Evaluator",
+        name="Signal Evaluator",
         instructions=(
-            "You are a senior investment analyst evaluating whether a stock is worth investing in. "
-            "Score the investment opportunity (NOT the writing quality) from 0-10 based on: "
-            "strength of fundamentals, sentiment direction, risk level, and clarity of the recommendation. "
-            "Deduct points for: high risk level, negative sentiment, unresolved red flags, "
-            "weak or missing price targets, vague Buy/Hold/Sell reasoning. "
-            "A risky or speculative stock should score 4-6. A strong stock with clear upside should score 8-10. "
+            "You are a senior investment analyst scoring the strength of an investment opportunity from 0-10. "
+            "Score based on: quality of fundamentals, sentiment direction, risk level, and recommendation clarity. "
+            "Use this realistic scale: "
+            "9-10 = exceptional opportunity — strong fundamentals, positive sentiment, low risk, clear Buy signal. "
+            "7-8 = solid opportunity — good fundamentals, mostly positive sentiment, medium risk, reasonable upside. "
+            "5-6 = mixed or uncertain — weak fundamentals, neutral/mixed sentiment, or elevated risk without clear upside. "
+            "3-4 = poor opportunity — negative sentiment, high risk, multiple red flags. "
+            "0-2 = avoid — very high risk, strongly negative outlook, or no clear investment case. "
+            "Important: medium risk is normal for most stocks and should NOT lower the score on its own. "
+            "A well-known large-cap stock with solid earnings and positive sentiment should score 7-9. "
+            "Only score below 6 if there are genuine red flags, negative fundamentals, or negative sentiment. "
             "Respond ONLY in valid JSON with: "
             "score (0-10), passed (true/false if score >= 7), "
             "feedback (one sentence explaining the score)."

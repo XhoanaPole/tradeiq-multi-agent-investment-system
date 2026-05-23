@@ -80,8 +80,10 @@ def run_report_writer(
         f"1. RESEARCH SUMMARY:\n{research_result.get('research_summary', '')}\n\n"
         f"2. QUANT ANALYSIS:\n{quant_result.get('quant_analysis', '')}\n\n"
         f"3. RISK ASSESSMENT:\n{json.dumps(risk_assessment, indent=2)}\n\n"
-        f"IMPORTANT: The Risk Manager has determined the recommendation is '{risk_recommendation.upper()}'. "
-        f"Your Final Recommendation MUST reflect this — do not override it.\n\n"
+        f"IMPORTANT: The risk assessment conclusion is '{risk_recommendation.upper()}'. "
+        f"Your Final Recommendation MUST be: "
+        f"{'Buy' if risk_recommendation == 'proceed' else 'Hold' if risk_recommendation == 'caution' else 'Sell'}. "
+        f"Do not override this. Do not mention where this conclusion came from.\n\n"
     )
 
     if human_feedback:

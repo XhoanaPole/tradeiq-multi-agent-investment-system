@@ -53,8 +53,11 @@ def store_news(ticker: str, headlines: list[dict]):
         f"{h.get('title', '')} - {h.get('description', '')}"
         for h in headlines if h.get("title")
     ]
+    if not texts:
+        print(f" No headlines to store for {ticker}, skipping RAG storage.")
+        return
     ids = [f"{ticker}-news-{i}" for i in range(len(texts))]
-    metadatas = [{"ticker": ticker, "source": h.get("source", "")} for h in headlines]
+    metadatas = [{"ticker": ticker, "source": h.get("source", "")} for h in headlines if h.get("title")]
     embed_and_store(texts, ids, metadatas)
 
 if __name__ == "__main__":

@@ -19,9 +19,9 @@ approve/reject/revise decision , ensuring AI augments rather than replaces human
 ### Why LangGraph as the orchestrator?
 LangGraph provides a stateful graph model that makes the pipeline explicit and inspectable.
 Each node is a discrete step, edges define the flow, and conditional routing allows
-dynamic behavior , such as looping back to the report writer if the brief scores below 7.
-The built-in `MemorySaver` checkpointer preserves state across the retry loop without
-any custom implementation. No other framework offers this combination of explicitness
+dynamic behavior — such as routing to execute, reject, or revise based on human input.
+The built-in `MemorySaver` checkpointer preserves state across the human review checkpoint
+without any custom implementation. No other framework offers this combination of explicitness
 and flexibility for multi-step agent pipelines.
 
 ### Why CrewAI for the analysts?
@@ -122,17 +122,17 @@ format (Executive Summary, Analysis, Recommendation) is maintained across all ti
 ### Evaluator Scores
 
 During testing across multiple tickers (AAPL, TSLA, MSFT, NVDA, META, AMZN, JPM),
-the Evaluator agent assigned scores based on investment signal strength , strong stocks
+the Evaluator agent assigned scores based on investment signal strength — strong stocks
 with positive sentiment and low risk scored 8-9/10, while speculative or high-risk tickers
-scored 5-7/10. The retry loop triggered more frequently for high-risk tickers, producing
-a revised brief with clearer risk disclosures on the second attempt.
+scored 3-6/10. The score is shown to the human reviewer, who can approve, reject, or
+request a revised brief with specific feedback.
 
 ### Latency
 
 A full pipeline run takes approximately 45–90 seconds end-to-end, depending on:
 - NewsAPI response time
 - Number of LLM calls (4 agents + sentiment scoring + embedding)
-- Whether the retry loop triggers
+- Whether the human requests a revision
 
 The parallelization of the two CrewAI analysts reduces this by running both
 simultaneously rather than sequentially.

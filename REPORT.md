@@ -19,7 +19,7 @@ approve/reject/revise decision , ensuring AI augments rather than replaces human
 ### Why LangGraph as the orchestrator?
 LangGraph provides a stateful graph model that makes the pipeline explicit and inspectable.
 Each node is a discrete step, edges define the flow, and conditional routing allows
-dynamic behavior — such as routing to execute, reject, or revise based on human input.
+dynamic behavior, such as routing to execute, reject, or revise based on human input.
 The built-in `MemorySaver` checkpointer preserves state across the human review checkpoint
 without any custom implementation. No other framework offers this combination of explicitness
 and flexibility for multi-step agent pipelines.

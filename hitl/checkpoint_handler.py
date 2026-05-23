@@ -66,7 +66,7 @@ class CheckpointHandler:
             print(f"   {log['timestamp']}")
             print(f"     Decision   : {log['decision'].upper()}")
             print(f"     Risk Level : {log['risk_level'].upper()}")
-            print(f"     Brief Score: {log['brief_score']}/10")
+            print(f"     Signal Score: {log['brief_score']}/10")
             print(f"     Feedback   : {log['feedback']}")
             print()
 

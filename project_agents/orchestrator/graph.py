@@ -110,7 +110,7 @@ def human_review_node(state: InvestmentState) -> InvestmentState:
     print("═══════════════════════════════════════")
     print(f"\n Brief ready for {state['ticker']}")
     print(f"  Risk Level: {state['risk_result']['risk_assessment'].get('risk_level', 'N/A').upper()}")
-    print(f" Brief Score: {state['evaluation'].get('score', 'N/A')}/10")
+    print(f" Signal Score: {state['evaluation'].get('score', 'N/A')}/10")
     print("\n Awaiting human decision via Streamlit UI...")
     return {**state, "human_decision": "approved"}
 

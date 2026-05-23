@@ -944,7 +944,7 @@ footer { text-align: center; color: var(--text3); font-size: 0.75rem; padding: 4
     <div class="sec-hdr"><div class="sec-hdr-txt" id="resultsTicker">Summary</div><div class="sec-hdr-line"></div></div>
     <div class="metrics-grid">
       <div class="mcard"><div class="mlbl">Risk Level</div><div class="mval" id="mRisk">—</div></div>
-      <div class="mcard"><div class="mlbl">Brief Score</div><div class="mval cg" id="mScore">—</div></div>
+      <div class="mcard"><div class="mlbl">Signal Score</div><div class="mval cg" id="mScore">—</div></div>
       <div class="mcard"><div class="mlbl">Recommendation</div><div class="mval" id="mRec">—</div></div>
       <div class="mcard"><div class="mlbl">Sentiment</div><div class="mval cw" id="mSent">—</div></div>
     </div>
@@ -1535,7 +1535,7 @@ async function loadHistory() {
     });
 
     container.innerHTML = `
-      <div class="sec-hdr"><div class="sec-hdr-txt">Brief Score Over Time</div><div class="sec-hdr-line"></div></div>
+      <div class="sec-hdr"><div class="sec-hdr-txt">Signal Score Over Time</div><div class="sec-hdr-line"></div></div>
       <div class="card"><div id="historyChart" style="height:380px"></div></div>
       <div class="sec-hdr"><div class="sec-hdr-txt">All Entries (${logs.length})</div><div class="sec-hdr-line"></div></div>
       <div id="logList"></div>
@@ -1550,7 +1550,7 @@ async function loadHistory() {
       },
       yaxis: {
         showgrid: true, gridcolor: 'rgba(255,255,255,0.05)',
-        title: 'Brief Score (0–10)', range: [0, 10],
+        title: 'Signal Score (0–10)', range: [0, 10],
         color: 'rgba(255,255,255,0.4)', dtick: 2
       },
       legend: {

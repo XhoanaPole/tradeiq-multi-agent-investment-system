@@ -1,4 +1,4 @@
-# Project Report — TradeIQ Multi-Agent Investment System
+  # Project Report — TradeIQ Multi-Agent Investment System
 
 ## 1. Problem Statement
 
@@ -103,7 +103,7 @@ which call their functions as `@tool`-decorated wrappers within the CrewAI frame
 |---|---|
 | **Orchestrator-Workers** | LangGraph graph orchestrates all 4 agents as sequential nodes |
 | **Parallelization** | Research and Quant analysts run simultaneously via ThreadPoolExecutor |
-| **Evaluator-Optimizer** | Evaluator scores the brief 0-10; loops back to Report Writer if score < 7 (max 2 retries) |
+| **Evaluator-Optimizer** | Evaluator scores the investment signal 0-10 (fundamentals, sentiment, risk level); loops back to Report Writer if score < 7 (max 2 retries) |
 | **Prompt Chaining** | News → Sentiment → RAG retrieval → Risk → Brief → Recommendation |
 | **Human-in-the-Loop** | Human reviews the final brief via web UI and approves, rejects, or requests a revision |
 | **RAG Pipeline** | News headlines embedded with text-embedding-3-small, stored and retrieved from ChromaDB |
@@ -122,9 +122,10 @@ format (Executive Summary, Analysis, Recommendation) is maintained across all ti
 ### Evaluator Scores
 
 During testing across multiple tickers (AAPL, TSLA, MSFT, NVDA, META, AMZN, JPM),
-the Evaluator agent assigned scores between 7 and 9 out of 10. The retry loop
-triggered in approximately 20% of runs, producing a revised brief with a higher score
-on the second attempt.
+the Evaluator agent assigned scores based on investment signal strength — strong stocks
+with positive sentiment and low risk scored 8-9/10, while speculative or high-risk tickers
+scored 5-7/10. The retry loop triggered more frequently for high-risk tickers, producing
+a revised brief with clearer risk disclosures on the second attempt.
 
 ### Latency
 

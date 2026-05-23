@@ -141,12 +141,7 @@ def rejected_node(state: InvestmentState) -> InvestmentState:
 
 # ── ROUTING LOGIC ─────────────────────────────────────────
 def route_after_evaluation(state: InvestmentState) -> str:
-    """If brief score is too low, go back to report writer."""
-    score = state["evaluation"].get("score", 0)
-    retry = state.get("retry_count", 0)
-    if score < 7 and retry < 2:
-        print(f"\n Score too low ({score}/10), retrying report... (attempt {retry+1})")
-        return "retry"
+    """Always send to human review — human decides via Revise button if rewrite is needed."""
     return "human_review"
 
 def route_after_human(state: InvestmentState) -> str:

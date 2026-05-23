@@ -103,7 +103,7 @@ which call their functions as `@tool`-decorated wrappers within the CrewAI frame
 |---|---|
 | **Orchestrator-Workers** | LangGraph graph orchestrates all 4 agents as sequential nodes |
 | **Parallelization** | Research and Quant analysts run simultaneously via ThreadPoolExecutor |
-| **Evaluator-Optimizer** | Evaluator scores the investment signal 0-10 (fundamentals, sentiment, risk level); loops back to Report Writer if score < 7 (max 2 retries) |
+| **Evaluator** | Evaluator scores the investment signal 0-10 (fundamentals, sentiment, risk level); score is shown to the human who decides to approve, reject, or revise |
 | **Prompt Chaining** | News → Sentiment → RAG retrieval → Risk → Brief → Recommendation |
 | **Human-in-the-Loop** | Human reviews the final brief via web UI and approves, rejects, or requests a revision |
 | **RAG Pipeline** | News headlines embedded with text-embedding-3-small, stored and retrieved from ChromaDB |

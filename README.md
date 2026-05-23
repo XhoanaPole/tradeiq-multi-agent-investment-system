@@ -1,7 +1,7 @@
 # TradeIQ — Investment Research & Advisory System
 
 A Multi-Agent AI system that researches stocks, assesses risk, and generates
-investment briefs — with a Human-in-the-Loop checkpoint before any action is taken.
+investment briefs, with a Human-in-the-Loop checkpoint before any action is taken.
 
 ## Architecture
 

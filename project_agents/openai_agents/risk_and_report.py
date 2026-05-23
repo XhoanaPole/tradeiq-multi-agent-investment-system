@@ -126,6 +126,8 @@ def evaluate_brief(brief: str, risk_result: dict = None, research_result: dict =
         )
     if research_result:
         sentiment = research_result.get("sentiment", {})
+        if isinstance(sentiment, list):
+            sentiment = sentiment[0] if sentiment else {}
         context += (
             f"\n\nSentiment Data:\n"
             f"- Score: {sentiment.get('score', 'unknown')} (scale: -1.0 negative to 1.0 positive)\n"

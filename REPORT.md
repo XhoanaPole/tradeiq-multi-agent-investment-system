@@ -3,7 +3,7 @@
 ## 1. Problem Statement
 
 Investment research is a time-intensive process that requires synthesizing data from
-multiple sources — price history, financial ratios, news sentiment, and risk factors —
+multiple sources : price history, financial ratios, news sentiment, and risk factors ,
 before a human decision-maker can act. Doing this manually for even a single stock
 takes hours and is prone to cognitive bias.
 

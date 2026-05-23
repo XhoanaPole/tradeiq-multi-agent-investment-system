@@ -144,8 +144,8 @@ Then enter a stock ticker when prompted (e.g. `AAPL`, `TSLA`, `MSFT`)
 2. Research Analyst and Quant Analyst run in parallel
 3. Risk Manager is called via the A2A server at `http://localhost:8001`
 4. Report Writer generates a structured investment brief
-5. Evaluator scores the brief out of 10 — loops back if score < 7
-6. You review the brief and choose: Approve / Reject / Revise
+5. Evaluator scores the investment signal out of 10
+6. You review the brief and score, then choose: Approve / Reject / Revise
 7. Brief saved to `outputs/` folder and decision logged to `outputs/checkpoints/`
 
 ## Bonus — A2A Framework

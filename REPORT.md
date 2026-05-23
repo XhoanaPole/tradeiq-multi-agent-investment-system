@@ -19,7 +19,7 @@ approve/reject/revise decision , ensuring AI augments rather than replaces human
 ### Why LangGraph as the orchestrator?
 LangGraph provides a stateful graph model that makes the pipeline explicit and inspectable.
 Each node is a discrete step, edges define the flow, and conditional routing allows
-dynamic behavior — such as looping back to the report writer if the brief scores below 7.
+dynamic behavior , such as looping back to the report writer if the brief scores below 7.
 The built-in `MemorySaver` checkpointer preserves state across the retry loop without
 any custom implementation. No other framework offers this combination of explicitness
 and flexibility for multi-step agent pipelines.
@@ -43,7 +43,7 @@ FastMCP implements the Model Context Protocol (MCP) standard, which defines a cl
 separation between AI agents and the tools they use. By wrapping `yfinance` and
 `NewsAPI` calls in MCP servers, the system follows the principle that agents should
 not have direct dependencies on data sources. Each MCP server exposes Tools (callable
-functions), Resources (queryable data), and Prompts (reusable prompt templates) —
+functions), Resources (queryable data), and Prompts (reusable prompt templates) ,
 all three FastMCP primitives are implemented.
 
 ### Why ChromaDB for RAG?
@@ -57,7 +57,7 @@ summary beyond what a raw news search would provide.
 The A2A (Agent-to-Agent) framework treats the Risk Manager as a standalone, independently
 deployable agent. It exposes an agent card at `/.well-known/agent.json` (describing its
 capabilities), a `/a2a` endpoint for receiving tasks, and a `/health` endpoint for
-availability checks. This demonstrates real-world agent interoperability — the main
+availability checks. This demonstrates real-world agent interoperability , the main
 system calls the Risk Manager over HTTP as it would any external service, and falls back
 to a local implementation if the server is offline.
 
